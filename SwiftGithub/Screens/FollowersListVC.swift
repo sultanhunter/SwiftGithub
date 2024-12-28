@@ -22,6 +22,8 @@ class FollowersListVC: UIViewController {
     var nextPageAvailable = true
     var isLoading = false
 
+    let padding: CGFloat = 12
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
@@ -45,15 +47,18 @@ class FollowersListVC: UIViewController {
     }
 
     private func configureCollectionView() {
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UIHelper.createThreeColumnFlowLayout(in: view))
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UICollectionViewFlowLayout())
 
         view.addSubview(collectionView!)
 
         collectionView?.delegate = self
         collectionView?.backgroundColor = .systemBackground
         collectionView?.register(FollowerCell.self, forCellWithReuseIdentifier: FollowerCell.reuseId)
+        collectionView?.register(FooterLoadingView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: FooterLoadingView.indentifier)
     }
 
+    // We are configuringDataSource manually and not conforming to it as UICollectionViewDiffableDataSource is not conformable
+    // we can conform to simple UICollectionViewDataSource
     private func configureDataSource() {
         dataSource = UICollectionViewDiffableDataSource<Section, Follower>(collectionView: collectionView!, cellProvider: { [weak self] _, indexPath, follower -> UICollectionViewCell in
 
@@ -62,6 +67,19 @@ class FollowersListVC: UIViewController {
 
             return cell
         })
+
+        dataSource?.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath -> UICollectionReusableView in
+            guard kind == UICollectionView.elementKindSectionFooter, self?.nextPageAvailable ?? false else {
+                return UICollectionReusableView()
+            }
+
+            guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: FooterLoadingView.indentifier, for: indexPath) as? FooterLoadingView
+            else {
+                fatalError("Unsupported")
+            }
+            footer.startAnimating()
+            return footer
+        }
     }
 
     private func updateData() {
@@ -116,5 +134,31 @@ extension FollowersListVC: UICollectionViewDelegate {
                 await getFollowers(for: userName, page: nextPage)
             }
         }
+    }
+}
+
+extension FollowersListVC: UICollectionViewDelegateFlowLayout {
+    /// CollectionViewPadding
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
+    }
+
+    /// Cell Size
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let bounds = collectionView.bounds
+        let minimumItemSpacing: CGFloat = 10
+        let availableWidth = bounds.width - (padding * 2) - (minimumItemSpacing * 2)
+
+        let itemWidth = availableWidth / 3
+
+        return CGSize(width: itemWidth, height: itemWidth + 40)
+    }
+
+    /// Footer Size
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        guard nextPageAvailable else {
+            return .zero
+        }
+        return CGSize(width: collectionView.frame.width, height: 100)
     }
 }

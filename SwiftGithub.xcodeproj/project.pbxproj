@@ -17,6 +17,7 @@
 		84C479292B99D01E00E051DB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C479282B99D01E00E051DB /* SceneDelegate.swift */; };
 		84C479302B99D02900E051DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84C4792F2B99D02900E051DB /* Assets.xcassets */; };
 		84C479332B99D02900E051DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84C479312B99D02900E051DB /* LaunchScreen.storyboard */; };
+		84F51B962D209547003CAE21 /* FooterLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F51B952D209547003CAE21 /* FooterLoadingView.swift */; };
 		84F592072D1C2FDD00BEEFA3 /* SGBodyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F592062D1C2FDD00BEEFA3 /* SGBodyLabel.swift */; };
 		84F592092D1C32E900BEEFA3 /* SGAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F592082D1C32E900BEEFA3 /* SGAlertVC.swift */; };
 		84F5920B2D1C496000BEEFA3 /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F5920A2D1C496000BEEFA3 /* UIViewController+Ext.swift */; };
@@ -43,6 +44,7 @@
 		84C4792F2B99D02900E051DB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84C479322B99D02900E051DB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84C479342B99D02900E051DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84F51B952D209547003CAE21 /* FooterLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterLoadingView.swift; sourceTree = "<group>"; };
 		84F592062D1C2FDD00BEEFA3 /* SGBodyLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SGBodyLabel.swift; sourceTree = "<group>"; };
 		84F592082D1C32E900BEEFA3 /* SGAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SGAlertVC.swift; sourceTree = "<group>"; };
 		84F5920A2D1C496000BEEFA3 /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				84F5921D2D1F441C00BEEFA3 /* FollowerCell.swift */,
+				84F51B952D209547003CAE21 /* FooterLoadingView.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -252,6 +255,7 @@
 				84F592072D1C2FDD00BEEFA3 /* SGBodyLabel.swift in Sources */,
 				84F5920B2D1C496000BEEFA3 /* UIViewController+Ext.swift in Sources */,
 				84F592092D1C32E900BEEFA3 /* SGAlertVC.swift in Sources */,
+				84F51B962D209547003CAE21 /* FooterLoadingView.swift in Sources */,
 				84F592202D1F44D800BEEFA3 /* SGAvatarImageView.swift in Sources */,
 				846B01A52D1311F8005CFFFF /* FollowersListVC.swift in Sources */,
 				84F5921E2D1F441C00BEEFA3 /* FollowerCell.swift in Sources */,
