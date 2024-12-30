@@ -70,7 +70,7 @@ class FollowersListVC: UIViewController {
 
     private func hideLoadingView() {
         loadingIndicator.stopAnimating()
-        loadingIndicator.removeFromSuperview()
+        loadingIndicator.removeFromSuperViewOnMain()
     }
 
     private func showCollectionView() {
@@ -138,14 +138,9 @@ class FollowersListVC: UIViewController {
             if followers.isEmpty {
                 let message = "This users doesn't have any followers. Go follow them 😄"
                 hideLoadingView()
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
-                    print("showing empty view")
-                    self.showEmptyView(with: message, in: self.view)
-                }
+                showEmptyView(with: message, in: view)
             } else {
                 updateData()
-
                 hideLoadingView()
                 showCollectionView()
             }

@@ -8,7 +8,21 @@
 import UIKit
 
 extension UIView {
-    func addSubviews(_ views: UIView...) {
-        views.forEach { addSubview($0) }
+    func addSubviewOnMain(_ view: UIView) {
+        DispatchQueue.main.async { [weak self] in
+            self?.addSubview(view)
+        }
+    }
+
+    func addSubviewsOnMain(_ views: UIView...) {
+        DispatchQueue.main.async { [weak self] in
+            views.forEach { self?.addSubview($0) }
+        }
+    }
+
+    func removeFromSuperViewOnMain() {
+        DispatchQueue.main.async { [weak self] in
+            self?.removeFromSuperview()
+        }
     }
 }

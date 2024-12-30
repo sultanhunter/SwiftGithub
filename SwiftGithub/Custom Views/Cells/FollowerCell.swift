@@ -31,7 +31,6 @@ class FollowerCell: UICollectionViewCell {
     }
 
     private func configure() {
-        backgroundColor = .systemPurple
         usernameLabel.translatesAutoresizingMaskIntoConstraints = false
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         addSubviews(avatarImageView, usernameLabel)

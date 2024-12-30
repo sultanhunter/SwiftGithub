@@ -20,11 +20,11 @@ extension UIViewController {
     func showEmptyView(with message: String, in view: UIView) {
         view.subviews.forEach {
             if $0 is SGEmptyStateView {
-                $0.removeFromSuperview()
+                $0.removeFromSuperViewOnMain()
             }
         }
         let emptyView = SGEmptyStateView(message: message)
         emptyView.frame = view.frame
-        view.addSubview(emptyView)
+        view.addSubviewOnMain(emptyView)
     }
 }

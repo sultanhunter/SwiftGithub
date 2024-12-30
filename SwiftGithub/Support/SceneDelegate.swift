@@ -38,11 +38,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func createTabBar() -> UITabBarController {
         let tabbar = UITabBarController()
+
+        let appearance = UITabBarAppearance()
+        appearance.configureWithTransparentBackground()
+        appearance.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial)
+        appearance.backgroundColor = UIColor.clear
+
+        tabbar.tabBar.standardAppearance = appearance
+        tabbar.tabBar.scrollEdgeAppearance = appearance
+
         UITabBar.appearance().tintColor = .systemGreen
         UITabBar.appearance().isTranslucent = true
+
         let searchNC = createSearchNC()
         let favoritesNC = createFavoritesNC()
         tabbar.viewControllers = [searchNC, favoritesNC]
+
         return tabbar
     }
 
