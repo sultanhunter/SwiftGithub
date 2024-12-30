@@ -30,6 +30,5 @@ class SGTitleLabel: UILabel {
         adjustsFontSizeToFitWidth = true
         minimumScaleFactor = 0.9
         lineBreakMode = .byTruncatingTail
-        translatesAutoresizingMaskIntoConstraints = false
     }
 }

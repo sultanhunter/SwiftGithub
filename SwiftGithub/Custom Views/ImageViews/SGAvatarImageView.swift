@@ -24,7 +24,6 @@ class SGAvatarImageView: UIImageView {
         layer.cornerRadius = 10
         clipsToBounds = true
         image = placeholderImage
-        translatesAutoresizingMaskIntoConstraints = false
     }
 
     func downloadAndSetImage(from urlString: String) async {

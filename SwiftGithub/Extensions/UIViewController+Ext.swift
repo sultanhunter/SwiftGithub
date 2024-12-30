@@ -16,4 +16,15 @@ extension UIViewController {
             self.present(alertVC, animated: true)
         }
     }
+
+    func showEmptyView(with message: String, in view: UIView) {
+        view.subviews.forEach {
+            if $0 is SGEmptyStateView {
+                $0.removeFromSuperview()
+            }
+        }
+        let emptyView = SGEmptyStateView(message: message)
+        emptyView.frame = view.frame
+        view.addSubview(emptyView)
+    }
 }

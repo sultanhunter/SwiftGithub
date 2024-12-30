@@ -25,13 +25,15 @@ class FollowerCell: UICollectionViewCell {
 
     func set(follower: Follower) {
         usernameLabel.text = follower.login
-        Task{
+        Task {
             await avatarImageView.downloadAndSetImage(from: follower.avatarUrl)
         }
     }
 
     private func configure() {
         backgroundColor = .systemPurple
+        usernameLabel.translatesAutoresizingMaskIntoConstraints = false
+        avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         addSubviews(avatarImageView, usernameLabel)
 
         let padding: CGFloat = 8

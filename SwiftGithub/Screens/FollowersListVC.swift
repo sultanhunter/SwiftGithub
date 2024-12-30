@@ -22,6 +22,8 @@ class FollowersListVC: UIViewController {
     var nextPageAvailable = true
     var isLoading = false
 
+    var loadingIndicator = FooterLoadingView()
+
     let padding: CGFloat = 12
 
     override func viewDidLoad() {
@@ -29,6 +31,14 @@ class FollowersListVC: UIViewController {
         configureViewController()
         configureCollectionView()
         configureDataSource()
+        Task {
+            configureAndShowLoadingView()
+            await getFollowers(for: userName, page: nextPage)
+        }
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        print("Disposed")
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -46,10 +56,36 @@ class FollowersListVC: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
     }
 
+    private func configureAndShowLoadingView() {
+        view.addSubview(loadingIndicator)
+        loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            loadingIndicator.heightAnchor.constraint(equalToConstant: 100),
+            loadingIndicator.widthAnchor.constraint(equalTo: view.widthAnchor)
+        ])
+        loadingIndicator.startAnimating()
+    }
+
+    private func hideLoadingView() {
+        loadingIndicator.stopAnimating()
+        loadingIndicator.removeFromSuperview()
+    }
+
+    private func showCollectionView() {
+        collectionView?.isHidden = false
+    }
+
     private func configureCollectionView() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UICollectionViewFlowLayout())
 
         view.addSubview(collectionView!)
+
+        // We are hiding collectionView until we get the data because of 2 reasons:
+        // 1- If we show the collectionView even when there is no data the reached bottom condition will be true.
+        // 2- So that we can show initialLoadingIndicator.
+        collectionView?.isHidden = true
 
         collectionView?.delegate = self
         collectionView?.backgroundColor = .systemBackground
@@ -99,7 +135,20 @@ class FollowersListVC: UIViewController {
             let data = try await NetworkManager.shared.getFollowers(for: userName, page: page)
             followers.append(contentsOf: data)
 
-            updateData()
+            if followers.isEmpty {
+                let message = "This users doesn't have any followers. Go follow them 😄"
+                hideLoadingView()
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    print("showing empty view")
+                    self.showEmptyView(with: message, in: self.view)
+                }
+            } else {
+                updateData()
+
+                hideLoadingView()
+                showCollectionView()
+            }
 
             if data.count == 100 {
                 nextPage += 1

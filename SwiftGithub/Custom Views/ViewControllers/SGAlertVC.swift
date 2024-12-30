@@ -45,12 +45,12 @@ class SGAlertVC: UIViewController {
     }
 
     private func configureContainerView() {
+        containerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(containerView)
         containerView.backgroundColor = .systemBackground
         containerView.layer.cornerRadius = 16
         containerView.layer.borderWidth = 2
         containerView.layer.borderColor = UIColor.white.cgColor
-        containerView.translatesAutoresizingMaskIntoConstraints = false
 
         containerView.layoutMargins = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
 
@@ -63,6 +63,8 @@ class SGAlertVC: UIViewController {
     }
 
     private func configureTitleLabel() {
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+
         containerView.addSubview(titleLabel)
         titleLabel.text = alertTitle
 
@@ -75,6 +77,8 @@ class SGAlertVC: UIViewController {
     }
 
     private func configureActionButton() {
+        actionButton.translatesAutoresizingMaskIntoConstraints = false
+
         containerView.addSubview(actionButton)
         actionButton.setTitle(buttonTitle, for: .normal)
         actionButton.addTarget(self, action: #selector(dismissVC), for: .touchUpInside)
@@ -87,11 +91,9 @@ class SGAlertVC: UIViewController {
         ])
     }
 
-    @objc private func dismissVC() {
-        dismiss(animated: true)
-    }
-
     private func configureBodyLabel() {
+        messageLabel.translatesAutoresizingMaskIntoConstraints = false
+
         containerView.addSubview(messageLabel)
         messageLabel.text = message
         messageLabel.numberOfLines = 4
@@ -102,5 +104,9 @@ class SGAlertVC: UIViewController {
             messageLabel.trailingAnchor.constraint(equalTo: containerView.layoutMarginsGuide.trailingAnchor),
             messageLabel.bottomAnchor.constraint(equalTo: actionButton.topAnchor, constant: -12)
         ])
+    }
+
+    @objc private func dismissVC() {
+        dismiss(animated: true)
     }
 }

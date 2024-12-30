@@ -29,6 +29,7 @@ class NetworkManager {
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
 
                 let followers = try decoder.decode([Follower].self, from: data)
+
                 return followers
             }
             catch {

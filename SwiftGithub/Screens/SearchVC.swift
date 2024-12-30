@@ -10,6 +10,7 @@ import UIKit
 class SearchVC: UIViewController {
     let logoImageView = UIImageView()
     let usernameTextField = SGTextField()
+
     let cta = SGButton(backgroundColor: .systemGreen, title: "Get Followers")
 
     var isUserNameEntered: Bool {
@@ -37,8 +38,8 @@ class SearchVC: UIViewController {
     }
 
     func configureLogoImageView() {
-        view.addSubview(logoImageView)
         logoImageView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(logoImageView)
         logoImageView.image = UIImage(named: "gh-logo")
 
         NSLayoutConstraint.activate([
@@ -50,6 +51,7 @@ class SearchVC: UIViewController {
     }
 
     func configureTextField() {
+        usernameTextField.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(usernameTextField)
         usernameTextField.delegate = self
         NSLayoutConstraint.activate([
@@ -61,6 +63,7 @@ class SearchVC: UIViewController {
     }
 
     func configureCta() {
+        cta.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(cta)
         cta.addTarget(self, action: #selector(pushFollowerListVC), for: .touchUpInside)
         NSLayoutConstraint.activate([
