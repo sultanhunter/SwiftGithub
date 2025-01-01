@@ -14,6 +14,10 @@ extension UIView {
         }
     }
 
+    func addSubviews(_ views: UIView...) {
+        views.forEach { addSubview($0) }
+    }
+
     func addSubviewsOnMain(_ views: UIView...) {
         DispatchQueue.main.async { [weak self] in
             views.forEach { self?.addSubview($0) }

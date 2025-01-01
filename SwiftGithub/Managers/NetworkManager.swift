@@ -16,6 +16,8 @@ class NetworkManager {
     let imageCache = NSCache<NSString, ImageData>()
 
     func getFollowers(for username: String, page: Int) async throws -> [Follower] {
+        print("Get Follower Api Fired")
+
         let endpoint = baseUrl + "/users/\(username)/followers?per_page=100&page=\(page)"
 
         guard let url = URL(string: endpoint) else { throw SGError(.invalidUsername) }

@@ -24,10 +24,13 @@ class SGAlertVC: UIViewController {
 
     let padding: CGFloat = 20
 
-    init(title: String, message: String, buttonTitle: String) {
+    let completion: (() -> Void)?
+
+    init(title: String, message: String, buttonTitle: String, completion: (() -> Void)?) {
         self.alertTitle = title
         self.message = message
         self.buttonTitle = buttonTitle
+        self.completion = completion
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -108,5 +111,6 @@ class SGAlertVC: UIViewController {
 
     @objc private func dismissVC() {
         dismiss(animated: true)
+        completion?()
     }
 }
