@@ -22,9 +22,13 @@ class NetworkManager {
 
         guard let url = URL(string: endpoint) else { throw SGError(.invalidUsername) }
 
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(GithubApi.api)", forHTTPHeaderField: "Authorization")
+
         // Firing api call
         do {
-            let (data, response) = try await URLSession.shared.data(from: url)
+            let (data, response) = try await URLSession.shared.data(for: request)
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else { throw SGError(.invalidResponse) }
             do {
                 let decoder = JSONDecoder()

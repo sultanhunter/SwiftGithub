@@ -133,7 +133,22 @@ class FollowersListVC: UIViewController {
         snapshot.appendItems(followers)
 
         DispatchQueue.main.async { [weak self] in
-            self?.dataSource?.apply(snapshot, animatingDifferences: true)
+            self?.dataSource?.apply(snapshot, animatingDifferences: true) { [weak self] in
+                guard let self = self else { return }
+                if !self.isCollectionViewScrollable() && self.nextPageAvailable {
+                    Task {
+                        await self.getFollowers(for: self.userName, page: self.nextPage)
+                    }
+                }
+            }
+        }
+    }
+
+    func isCollectionViewScrollable() -> Bool {
+        if collectionView != nil {
+            return collectionView!.contentSize.height > collectionView!.bounds.height
+        } else {
+            return true
         }
     }
 
@@ -151,6 +166,17 @@ class FollowersListVC: UIViewController {
                 hideLoadingView()
                 showEmptyView(with: message, in: view)
             } else {
+                if data.count == 100 {
+                    previousPage += 1
+                    nextPage += 1
+                } else {
+                    nextPageAvailable = false
+                }
+                setIsLoading(false)
+
+                hideLoadingView()
+                showCollectionView()
+
                 if isSearchActive {
                     if let searchText = navigationItem.searchController?.searchBar.text, !searchText.isEmpty {
                         applySearch(with: searchText)
@@ -158,18 +184,10 @@ class FollowersListVC: UIViewController {
                 } else {
                     updateData(with: followers)
                 }
-
-                hideLoadingView()
-                showCollectionView()
             }
 
-            if data.count == 100 {
-                previousPage += 1
-                nextPage += 1
-            } else {
-                nextPageAvailable = false
-            }
-            setIsLoading(false)
+            print("Get followers completed,nextPageAvailable:\(nextPageAvailable),totalFollowers:\(followers.count)")
+
         } catch let error as SGError {
             setIsLoading(false)
             presentAlertOnMainThread(title: "Something went wrong", message: error.message.rawValue, buttonTitle: "Ok") { [weak self] in

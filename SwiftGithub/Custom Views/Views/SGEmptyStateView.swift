@@ -33,7 +33,7 @@ class SGEmptyStateView: UIView {
         logoImageView.image = UIImage(named: "empty-state-logo")
 
         NSLayoutConstraint.activate([
-            messageLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -150),
+            messageLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40),
             messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40),
 

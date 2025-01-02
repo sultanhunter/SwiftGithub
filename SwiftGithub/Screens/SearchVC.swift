@@ -29,6 +29,7 @@ class SearchVC: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        print("search vc appear")
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
