@@ -48,8 +48,9 @@ class SGAlertVC: UIViewController {
     }
 
     private func configureContainerView() {
-        containerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(containerView)
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+
         containerView.backgroundColor = .systemBackground
         containerView.layer.cornerRadius = 16
         containerView.layer.borderWidth = 2
@@ -66,9 +67,9 @@ class SGAlertVC: UIViewController {
     }
 
     private func configureTitleLabel() {
+        containerView.addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        containerView.addSubview(titleLabel)
         titleLabel.text = alertTitle
 
         NSLayoutConstraint.activate([
@@ -80,9 +81,9 @@ class SGAlertVC: UIViewController {
     }
 
     private func configureActionButton() {
+        containerView.addSubview(actionButton)
         actionButton.translatesAutoresizingMaskIntoConstraints = false
 
-        containerView.addSubview(actionButton)
         actionButton.setTitle(buttonTitle, for: .normal)
         actionButton.addTarget(self, action: #selector(dismissVC), for: .touchUpInside)
 
@@ -95,9 +96,9 @@ class SGAlertVC: UIViewController {
     }
 
     private func configureBodyLabel() {
+        containerView.addSubview(messageLabel)
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        containerView.addSubview(messageLabel)
         messageLabel.text = message
         messageLabel.numberOfLines = 4
 

@@ -52,6 +52,43 @@ class NetworkManager {
         }
     }
 
+    func getUserData(for userName: String) async throws -> User {
+        print("Get UserData api Fired")
+
+        let endpoint = baseUrl + "/users/\(userName)"
+
+        guard let url = URL(string: endpoint) else { throw SGError(.invalidUsername) }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(GithubApi.api)", forHTTPHeaderField: "Authorization")
+
+        // Firing api call
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else { throw SGError(.invalidResponse) }
+            do {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+
+                let user = try decoder.decode(User.self, from: data)
+
+                return user
+            }
+            catch {
+                throw SGError(.invalidData)
+            }
+        }
+
+        /// we are catching any SGError errors thrown from inner blocks as the outer most "do catch" will catch them
+        catch let error as SGError {
+            throw error
+        }
+        catch {
+            throw SGError(.unableToComplete)
+        }
+    }
+
     func getImageData(from urlString: String) async throws -> Data {
         if let imageData = imageCache.object(forKey: NSString(string: urlString)) {
             print("accessing image from cache")

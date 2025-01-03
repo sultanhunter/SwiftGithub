@@ -23,9 +23,10 @@ class SGEmptyStateView: UIView {
     }
 
     private func configure() {
+        addSubviews(messageLabel, logoImageView)
+
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
         logoImageView.translatesAutoresizingMaskIntoConstraints = false
-        addSubviews(messageLabel, logoImageView)
 
         messageLabel.numberOfLines = 0
         messageLabel.textColor = .secondaryLabel

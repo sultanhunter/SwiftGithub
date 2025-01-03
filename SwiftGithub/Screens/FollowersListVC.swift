@@ -235,6 +235,16 @@ extension FollowersListVC: UICollectionViewDelegate {
             }
         }
     }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let follower = isSearchActive ? searchedFollowers[indexPath.item] : followers[indexPath.item]
+
+        let vc = UserInfoVC(follower: follower)
+
+        let navController = UINavigationController(rootViewController: vc)
+
+        present(navController, animated: true)
+    }
 }
 
 extension FollowersListVC: UICollectionViewDelegateFlowLayout {
