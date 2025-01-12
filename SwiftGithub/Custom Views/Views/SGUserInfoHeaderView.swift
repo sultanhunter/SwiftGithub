@@ -12,10 +12,10 @@ class SGUserInfoHeaderView: UIView {
 
     let avatar = SGAvatarImageView(frame: .zero)
     let usernameLabel = SGTitleLabel(textAlignment: .left, fontSize: 34)
-//    let nameLabel = SGSecondaryTitleLabel(fontSize: 18)
-//    let locationImageView = UIImageView()
-//    let locationLabel = SGSecondaryTitleLabel(fontSize: 18)
-//    let bioLabel = SGBodyLabel(textAlignment: .left)
+    let nameLabel = SGSecondaryTitleLabel(fontSize: 18)
+    let locationImageView = UIImageView()
+    let locationLabel = SGSecondaryTitleLabel(fontSize: 18)
+    let bioLabel = SGBodyLabel(textAlignment: .left)
 
     init(user: User) {
         self.user = user
@@ -29,34 +29,80 @@ class SGUserInfoHeaderView: UIView {
     }
 
     private func configureConstraints() {
-        addSubviews(avatar, usernameLabel)
-        // addSubviews(avatar, usernameLabel, nameLabel, locationImageView, locationLabel, bioLabel)
+        // Creating Row for location image & name
+        let locationRow = UIStackView(arrangedSubviews: [locationImageView, locationLabel])
+        locationRow.axis = .horizontal
+        locationRow.spacing = 2
 
+        // Creating column for vertical info
+        let nameColumn = UIStackView(arrangedSubviews: [usernameLabel, nameLabel, locationRow])
+        nameColumn.axis = .vertical
+        nameColumn.alignment = .leading
+        nameColumn.spacing = 2
+
+        // Creating row to have avatar & vertical info
+        let upperRow = UIStackView(arrangedSubviews: [avatar, nameColumn])
+        upperRow.axis = .horizontal
+        upperRow.alignment = .center
+        upperRow.spacing = 12
+
+        // Creating Column for whole view
+        let wholeColumn = UIStackView(arrangedSubviews: [upperRow, bioLabel])
+
+        // have to add wholeColumn explicitly to subview as its last uistackview and all above uistackview gets automatically added to subview when passing to arrangedSubviews property of a uistackview
+        addSubview(wholeColumn)
+        wholeColumn.axis = .vertical
+        wholeColumn.alignment = .center
+        wholeColumn.spacing = 20
+
+        // Setting TAMIC to false
         avatar.translatesAutoresizingMaskIntoConstraints = false
         usernameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        locationImageView.translatesAutoresizingMaskIntoConstraints = false
+        locationLabel.translatesAutoresizingMaskIntoConstraints = false
+        bioLabel.translatesAutoresizingMaskIntoConstraints = false
+        locationRow.translatesAutoresizingMaskIntoConstraints = false
+        nameColumn.translatesAutoresizingMaskIntoConstraints = false
+        upperRow.translatesAutoresizingMaskIntoConstraints = false
+        wholeColumn.translatesAutoresizingMaskIntoConstraints = false
 
-//        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-//        locationImageView.translatesAutoresizingMaskIntoConstraints = false
-//        locationLabel.translatesAutoresizingMaskIntoConstraints = false
-//        bioLabel.translatesAutoresizingMaskIntoConstraints = false
+        // Setting username
+        usernameLabel.numberOfLines = 0
+        usernameLabel.text = user.login
 
-//        usernameLabel.numberOfLines = 0
+        // Setting name
+        nameLabel.text = user.name
+        nameLabel.numberOfLines = 1
+        nameLabel.lineBreakMode = .byTruncatingTail
 
+        // Setting locationImage image
+        locationImageView.image = UIImage(named: "location")
+
+        // Setting location name
+        locationLabel.text = user.location
+        locationLabel.numberOfLines = 1
+        locationLabel.lineBreakMode = .byTruncatingTail
+
+        // Setting bio text
+        bioLabel.text = user.bio
+
+        // Whole View Constraints
         let padding: CGFloat = 20
 
         layoutMargins = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
 
         NSLayoutConstraint.activate([
-            avatar.topAnchor.constraint(equalTo: topAnchor),
-            avatar.leadingAnchor.constraint(equalTo: leadingAnchor),
-            avatar.widthAnchor.constraint(equalToConstant: 90),
             avatar.heightAnchor.constraint(equalToConstant: 90),
+            avatar.widthAnchor.constraint(equalToConstant: 90),
 
-            usernameLabel.topAnchor.constraint(equalTo: topAnchor),
-            usernameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 100),
-            usernameLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            usernameLabel.heightAnchor.constraint(equalToConstant: 50)
+            locationImageView.heightAnchor.constraint(equalToConstant: 20),
+            locationImageView.widthAnchor.constraint(equalToConstant: 20),
 
+            wholeColumn.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor),
+            wholeColumn.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
+            wholeColumn.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
+            wholeColumn.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor),
         ])
 
         Task {
