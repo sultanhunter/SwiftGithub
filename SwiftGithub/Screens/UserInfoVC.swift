@@ -12,6 +12,13 @@ class UserInfoVC: UIViewController {
     var userData: User?
     var isLoading: Bool = false
 
+    private let spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.hidesWhenStopped = true
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        return spinner
+    }()
+
     init(follower: Follower) {
         self.follower = follower
         super.init(nibName: nil, bundle: nil)
@@ -31,8 +38,30 @@ class UserInfoVC: UIViewController {
         }
     }
 
+    private func showLoadingIndicator() {
+        view.addSubview(spinner)
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            spinner.heightAnchor.constraint(equalToConstant: 100),
+            spinner.widthAnchor.constraint(equalTo: view.widthAnchor),
+        ])
+        spinner.startAnimating()
+    }
+
+    private func removeLoadingIndicator() {
+        spinner.stopAnimating()
+        spinner.removeFromSuperview()
+    }
+
     private func setIsLoading(_ isLoading: Bool) {
         self.isLoading = isLoading
+        if isLoading {
+            showLoadingIndicator()
+        } else {
+            removeLoadingIndicator()
+        }
     }
 
     private func getUserData() async {
@@ -42,7 +71,7 @@ class UserInfoVC: UIViewController {
             self.userData = userData
             print("User Data Fetched:\(userData.login)")
 
-            addHeaderViewInUI(user: userData)
+            addUIElements(user: userData)
 
             setIsLoading(false)
 
@@ -63,17 +92,35 @@ class UserInfoVC: UIViewController {
         }
     }
 
-    private func addHeaderViewInUI(user: User) {
+    private func addUIElements(user: User) {
         let headerView = SGUserInfoHeaderView(user: user)
 
-        view.addSubview(headerView)
+        let containerOne = SGItemInfoView(user: user)
+        let containerTwo = SGItemInfoView(user: user)
+        containerOne.setData(type: .profile)
+        containerTwo.setData(type: .followers)
 
-        headerView.translatesAutoresizingMaskIntoConstraints = false
+        let uiScrollView = UIScrollView()
+
+        let uiStackView = UIStackView(arrangedSubviews: [headerView, containerOne, containerTwo])
+        uiStackView.axis = .vertical
+        uiStackView.spacing = 10
+
+        uiScrollView.addSubview(uiStackView)
+        view.addSubview(uiScrollView)
+
+        view.setTAMICFalse(views: headerView, containerOne, containerTwo, uiStackView, uiScrollView)
 
         NSLayoutConstraint.activate([
-            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            headerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            headerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            uiStackView.topAnchor.constraint(equalTo: uiScrollView.contentLayoutGuide.topAnchor),
+            uiStackView.leadingAnchor.constraint(equalTo: uiScrollView.frameLayoutGuide.leadingAnchor),
+            uiStackView.trailingAnchor.constraint(equalTo: uiScrollView.frameLayoutGuide.trailingAnchor),
+            uiStackView.bottomAnchor.constraint(equalTo: uiScrollView.contentLayoutGuide.bottomAnchor),
+
+            uiScrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            uiScrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            uiScrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            uiScrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
     }
 

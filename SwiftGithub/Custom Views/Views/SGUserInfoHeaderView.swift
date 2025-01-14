@@ -23,9 +23,7 @@ class SGUserInfoHeaderView: UIView {
         backgroundColor = .systemPink
 
         configureConstraints()
-        Task {
-            await avatar.downloadAndSetImage(from: user.avatarUrl)
-        }
+        configureUIElements()
     }
 
     private func configureConstraints() {
@@ -52,40 +50,13 @@ class SGUserInfoHeaderView: UIView {
         // have to add wholeColumn explicitly to subview as its last uistackview and all above uistackview gets automatically added to subview when passing to arrangedSubviews property of a uistackview
         addSubview(wholeColumn)
         wholeColumn.axis = .vertical
-        wholeColumn.alignment = .center
+        wholeColumn.alignment = .leading
         wholeColumn.spacing = 20
 
         // Setting TAMIC to false
-        avatar.translatesAutoresizingMaskIntoConstraints = false
-        usernameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        locationImageView.translatesAutoresizingMaskIntoConstraints = false
-        locationLabel.translatesAutoresizingMaskIntoConstraints = false
-        bioLabel.translatesAutoresizingMaskIntoConstraints = false
-        locationRow.translatesAutoresizingMaskIntoConstraints = false
-        nameColumn.translatesAutoresizingMaskIntoConstraints = false
-        upperRow.translatesAutoresizingMaskIntoConstraints = false
-        wholeColumn.translatesAutoresizingMaskIntoConstraints = false
-
-        // Setting username
-        usernameLabel.numberOfLines = 0
-        usernameLabel.text = user.login
-
-        // Setting name
-        nameLabel.text = user.name
-        nameLabel.numberOfLines = 1
-        nameLabel.lineBreakMode = .byTruncatingTail
-
-        // Setting locationImage image
-        locationImageView.image = UIImage(named: "location")
-
-        // Setting location name
-        locationLabel.text = user.location
-        locationLabel.numberOfLines = 1
-        locationLabel.lineBreakMode = .byTruncatingTail
-
-        // Setting bio text
-        bioLabel.text = user.bio
+        setTAMICFalse(views: avatar, usernameLabel, nameLabel,
+                      locationImageView, locationLabel, bioLabel,
+                      locationRow, nameColumn, upperRow, wholeColumn)
 
         // Whole View Constraints
         let padding: CGFloat = 20
@@ -104,6 +75,34 @@ class SGUserInfoHeaderView: UIView {
             wholeColumn.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
             wholeColumn.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor),
         ])
+    }
+
+    public func configureUIElements() {
+        // Setting username
+        usernameLabel.numberOfLines = 1
+        usernameLabel.lineBreakMode = .byTruncatingTail
+        usernameLabel.text = user.login
+
+        // Setting name
+        nameLabel.text = user.name ?? ""
+        nameLabel.numberOfLines = 1
+        nameLabel.lineBreakMode = .byTruncatingTail
+
+        // Setting locationImage image
+        locationImageView.image = UIImage(systemName: SFSymbols.location)
+        locationImageView.tintColor = .secondaryLabel
+
+        // Setting location name
+        locationLabel.text = user.location ?? "No Location"
+        locationLabel.numberOfLines = 1
+        locationLabel.lineBreakMode = .byTruncatingTail
+
+        // Setting bio text
+        bioLabel.text = user.bio ?? "No bio available"
+        bioLabel.numberOfLines = 3
+
+        bioLabel.minimumScaleFactor = 1
+        bioLabel.lineBreakMode = .byTruncatingTail
 
         Task {
             await avatar.downloadAndSetImage(from: user.avatarUrl)

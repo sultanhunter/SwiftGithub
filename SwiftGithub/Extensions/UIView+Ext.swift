@@ -29,4 +29,10 @@ extension UIView {
             self?.removeFromSuperview()
         }
     }
+
+    func setTAMICFalse(views: UIView...) {
+        for view in views {
+            view.translatesAutoresizingMaskIntoConstraints = false
+        }
+    }
 }

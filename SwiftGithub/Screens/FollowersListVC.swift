@@ -127,6 +127,7 @@ class FollowersListVC: UIViewController {
         collectionView?.isHidden = false
     }
 
+
     private func updateData(with followers: [Follower]) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Follower>()
         snapshot.appendSections([.main])
