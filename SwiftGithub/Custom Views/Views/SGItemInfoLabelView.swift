@@ -34,6 +34,7 @@ class SGItemInfoLabelView: UIView {
         let columnStackView = UIStackView(arrangedSubviews: [rowStackView, countLable])
         columnStackView.axis = .vertical
         columnStackView.spacing = 4
+        columnStackView.alignment = .leading
 
         addSubview(columnStackView)
         setTAMICFalse(views: rowStackView, columnStackView, self.symbolImageView, self.titleLabel, self.countLable)

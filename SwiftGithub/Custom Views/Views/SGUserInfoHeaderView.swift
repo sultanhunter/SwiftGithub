@@ -20,7 +20,6 @@ class SGUserInfoHeaderView: UIView {
     init(user: User) {
         self.user = user
         super.init(frame: .zero)
-        backgroundColor = .systemPink
 
         configureConstraints()
         configureUIElements()

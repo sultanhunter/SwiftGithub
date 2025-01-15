@@ -52,7 +52,7 @@ class SGItemInfoView: UIView {
 
         let columnStackView = UIStackView(arrangedSubviews: [rowStackView, actionButton])
         columnStackView.axis = .vertical
-        columnStackView.spacing = 10
+        columnStackView.spacing = 12
 
         addSubview(columnStackView)
 

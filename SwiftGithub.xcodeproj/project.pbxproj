@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		842433002D28402C00F94EBE /* UserInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842432FF2D28402C00F94EBE /* UserInfoVC.swift */; };
+		8462DEAB2D384F9B00A2654F /* SGPaddingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8462DEAA2D384F9B00A2654F /* SGPaddingView.swift */; };
 		84689DE22D2876B300BC5B54 /* SGUserInfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84689DE12D2876B300BC5B54 /* SGUserInfoHeaderView.swift */; };
 		84689DE42D2877AF00BC5B54 /* SGSecondaryTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84689DE32D2877AF00BC5B54 /* SGSecondaryTitleLabel.swift */; };
 		846B01A52D1311F8005CFFFF /* FollowersListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846B01A42D1311F8005CFFFF /* FollowersListVC.swift */; };
@@ -41,6 +42,7 @@
 
 /* Begin PBXFileReference section */
 		842432FF2D28402C00F94EBE /* UserInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoVC.swift; sourceTree = "<group>"; };
+		8462DEAA2D384F9B00A2654F /* SGPaddingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SGPaddingView.swift; sourceTree = "<group>"; };
 		84689DE12D2876B300BC5B54 /* SGUserInfoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SGUserInfoHeaderView.swift; sourceTree = "<group>"; };
 		84689DE32D2877AF00BC5B54 /* SGSecondaryTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SGSecondaryTitleLabel.swift; sourceTree = "<group>"; };
 		846B01A42D1311F8005CFFFF /* FollowersListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersListVC.swift; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 				84689DE12D2876B300BC5B54 /* SGUserInfoHeaderView.swift */,
 				84B3B6222D36F15D004DF3AB /* SGItemInfoLabelView.swift */,
 				84B3B6242D3700D5004DF3AB /* SGItemInfoView.swift */,
+				8462DEAA2D384F9B00A2654F /* SGPaddingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -323,6 +326,7 @@
 			files = (
 				84F592152D1C83A300BEEFA3 /* User.swift in Sources */,
 				84C984102D27389400B626BA /* github_api.swift in Sources */,
+				8462DEAB2D384F9B00A2654F /* SGPaddingView.swift in Sources */,
 				84B534772D10BB6900623DD4 /* SearchVC.swift in Sources */,
 				84A41CA72D15A21E00F58799 /* SGTitleLabel.swift in Sources */,
 				84F592072D1C2FDD00BEEFA3 /* SGBodyLabel.swift in Sources */,

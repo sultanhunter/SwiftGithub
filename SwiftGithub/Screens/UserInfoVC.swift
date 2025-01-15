@@ -93,24 +93,35 @@ class UserInfoVC: UIViewController {
     }
 
     private func addUIElements(user: User) {
+        // Header View
         let headerView = SGUserInfoHeaderView(user: user)
 
+        // Two Info Cards
         let containerOne = SGItemInfoView(user: user)
         let containerTwo = SGItemInfoView(user: user)
         containerOne.setData(type: .profile)
         containerTwo.setData(type: .followers)
 
-        let uiScrollView = UIScrollView()
+        // Wrapping Two Cards with Padding
+        let paddingViewOne = SGPaddingView(padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20),
+                                           child: containerOne)
+        let paddingViewTwo = SGPaddingView(padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20),
+                                           child: containerTwo)
 
-        let uiStackView = UIStackView(arrangedSubviews: [headerView, containerOne, containerTwo])
+        // Main Column
+        let uiStackView = UIStackView(arrangedSubviews: [headerView, paddingViewOne, paddingViewTwo])
         uiStackView.axis = .vertical
-        uiStackView.spacing = 10
+        uiStackView.spacing = 20
 
+        // Wrapping Column with ScrollView
+        let uiScrollView = UIScrollView()
         uiScrollView.addSubview(uiStackView)
         view.addSubview(uiScrollView)
 
-        view.setTAMICFalse(views: headerView, containerOne, containerTwo, uiStackView, uiScrollView)
+        // Setting Tamic of every object we created to false
+        view.setTAMICFalse(views: paddingViewOne, paddingViewTwo, containerOne, containerTwo, headerView, uiStackView, uiScrollView)
 
+        // Constraints
         NSLayoutConstraint.activate([
             uiStackView.topAnchor.constraint(equalTo: uiScrollView.contentLayoutGuide.topAnchor),
             uiStackView.leadingAnchor.constraint(equalTo: uiScrollView.frameLayoutGuide.leadingAnchor),
